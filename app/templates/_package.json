@@ -1,5 +1,15 @@
 {
-  "name": "package",
-  "version": "0.0.0",
-  "dependencies": {}
+	"name": "<%= name %>",
+	"version": "0.0.0",
+	"devDependencies": {
+		"grunt": "*",
+		"load-grunt-tasks": "*",
+		"grunt-contrib-coffee": "*",
+		"grunt-coffeelint": "*",
+		"grunt-contrib-watch": "*",
+		"chai": "*",
+		"grunt-mocha-test": "*"
+	},
+	"dependencies": {
+	}
 }
