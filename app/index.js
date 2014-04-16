@@ -122,7 +122,7 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 
 			case 'js':
 				this.mkdir('lib');
-				this.copy('index.js', 'src/index.js');
+				this.copy('index.js', 'lib/index.js');
 				break;
 		}
 
