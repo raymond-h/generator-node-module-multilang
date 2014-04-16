@@ -25,6 +25,15 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 		});
 	},
 
+	loadNpm: function() {
+		var done = this.async();
+
+		npm.load(function(err, npm) {
+			this.npm = npm;
+			done();
+		}.bind(this));
+	},
+
 	askFor: function () {
 		var done = this.async();
 
@@ -51,7 +60,7 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				type: 'input',
 				name: 'author',
 				message: 'Who is the author?',
-				default: npm.config.get('init.author.name')
+				default: this.npm.config.get('init.author.name')
 			},
 			{
 				type: 'list',
@@ -68,23 +77,45 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				message: 'Should the original source be included as well when publishing to the npm registry?',
 				default: false,
 				when: function(answers) { return answers.language === 'coffee'; }
+			},
+			{
+				type: 'checkbox',
+				name: 'extraDeps',
+				message: 'Any extra dependencies you\'d like in your fresh-from-the-oven module?',
+				choices: [
+					{ name: 'Underscore.js', value: 'underscore' },
+					{ name: 'Underscore.string', value: 'underscore.string' },
+					{ name: 'Underscore-contrib', value: 'underscore-contrib' },
+					{ name: 'Q', value: 'q' },
+					{ name: 'Request', value: 'request' }
+				]
 			}
 		];
 
 		this.prompt(prompts, function(answers) {
 			for(var k in answers) {
-				this[k] = props[k];
+				this[k] = answers[k];
 			}
 
 			done();
 		}.bind(this));
 	},
 
-	app: function () {
-		// this.mkdir('app');
-		// this.mkdir('app/templates');
+	module: function () {
+		switch(this.language) {
+			case 'coffee':
+				this.mkdir('src');
+				break;
 
-		// this.copy('_package.json', 'package.json');
+			case 'js':
+				this.mkdir('lib');
+				break;
+		}
+
+		this.mkdir('test');
+
+		this.template('_package.json', 'package.json');
+		this.template('_Gruntfile.coffee', 'Gruntfile.coffee');
 		// this.copy('_bower.json', 'bower.json');
 	},
 
