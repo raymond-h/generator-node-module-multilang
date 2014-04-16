@@ -130,6 +130,7 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 		this.template('_Gruntfile.coffee', 'Gruntfile.coffee');
 		this.template('_.gitignore', '.gitignore');
 		this.template('_.npmignore', '.npmignore');
+		this.template('_README.md', 'README.md');
 		// this.copy('_bower.json', 'bower.json');
 	},
 

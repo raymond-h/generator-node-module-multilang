@@ -24,7 +24,8 @@ describe('node-module generator', function () {
       '.gitignore',
       '.npmignore',
       'Gruntfile.coffee',
-      'package.json'
+      'package.json',
+      'README.md'
     ];
 
     helpers.mockPrompt(this.app, {
