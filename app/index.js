@@ -117,10 +117,12 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 		switch(this.language) {
 			case 'coffee':
 				this.mkdir('src');
+				this.copy('index.coffee', 'src/index.coffee');
 				break;
 
 			case 'js':
 				this.mkdir('lib');
+				this.copy('index.js', 'src/index.js');
 				break;
 		}
 
@@ -131,12 +133,6 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 		this.template('_.gitignore', '.gitignore');
 		this.template('_.npmignore', '.npmignore');
 		this.template('_README.md', 'README.md');
-		// this.copy('_bower.json', 'bower.json');
-	},
-
-	projectfiles: function () {
-		// this.copy('editorconfig', '.editorconfig');
-		// this.copy('jshintrc', '.jshintrc');
 	}
 });
 

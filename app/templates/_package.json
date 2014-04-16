@@ -3,6 +3,12 @@
 	"description": "<%= description %>",
 	"version": "0.0.0",
 	"license": "MIT",
+	"main": "lib/index.js",
+	"author": "<%= author %>",
+	"scripts": {
+		"prepublish": "grunt build",
+		"test": "grunt test"
+	},
 	"devDependencies": {
 		"grunt": "*",
 		"load-grunt-tasks": "*",
