@@ -86,6 +86,7 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 					{ name: 'Underscore.js', value: 'underscore' },
 					{ name: 'Underscore.string', value: 'underscore.string' },
 					{ name: 'Underscore-contrib', value: 'underscore-contrib' },
+					{ name: 'Lo-Dash', value: 'lodash' },
 					{ name: 'Q', value: 'q' },
 					{ name: 'Request', value: 'request' }
 				]
