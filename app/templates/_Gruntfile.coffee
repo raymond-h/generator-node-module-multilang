@@ -5,6 +5,7 @@ module.exports = (grunt) ->
 	grunt.initConfig
 		pkg: grunt.file.readJSON 'package.json'
 
+		<% if(language === 'coffee') { %>
 		coffee:
 			build:
 				expand: yes
@@ -19,6 +20,7 @@ module.exports = (grunt) ->
 			options:
 				no_tabs: level: 'ignore' # this is tab land, boy
 				indentation: value: 1 # single tabs
+		<% }; %>
 
 		mochaTest:
 			test:
@@ -26,19 +28,19 @@ module.exports = (grunt) ->
 					reporter: 'spec'
 					require: ['coffee-script/register']
 
-				src: ['test/**/*-test.coffee']
+				src: ['test/**/*-test.(js|coffee)']
 
 		watch:
 			dev:
-				files: ['src/**/*.coffee', 'test/**/*.coffee']
+				files: ['src/**/*.(js|coffee)', 'test/**/*.(js|coffee)']
 				tasks: ['lint', 'test']
 
 			test:
-				files: ['src/**/*.coffee', 'test/**/*.coffee']
+				files: ['src/**/*.(js|coffee)', 'test/**/*.(js|coffee)']
 				tasks: ['test']
 
 			lint:
-				files: ['src/**/*.coffee', 'test/**/*.coffee']
+				files: ['src/**/*.(js|coffee)', 'test/**/*.(js|coffee)']
 				tasks: ['lint']
 
 	grunt.registerTask 'default', ["build"]
