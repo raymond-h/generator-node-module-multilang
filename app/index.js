@@ -102,6 +102,10 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 		}.bind(this));
 	},
 
+	dependencies: function() {
+		this.deps = [].concat(this.extraDeps);
+	},
+
 	module: function () {
 		switch(this.language) {
 			case 'coffee':

@@ -11,5 +11,6 @@
 		"grunt-mocha-test": "*"
 	},
 	"dependencies": {
+<% _.forEach(deps, function(dep, i) { print('\t\t"' + dep + '": "*"' + (i < deps.length-1 ? ',\n' : '')); }); %>
 	}
 }
