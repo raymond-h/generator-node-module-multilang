@@ -1,0 +1,4 @@
+node_modules/
+<% if(!checkinCompiled) { %>lib/<% } %>
+
+*.log

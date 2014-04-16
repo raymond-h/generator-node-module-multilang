@@ -79,6 +79,13 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				when: function(answers) { return answers.language === 'coffee'; }
 			},
 			{
+				type: 'confirm',
+				name: 'checkinCompiled',
+				message: 'Should the compiled output be checked in to git as well?',
+				default: false,
+				when: function(answers) { return answers.language === 'coffee'; }
+			},
+			{
 				type: 'checkbox',
 				name: 'extraDeps',
 				message: 'Any extra dependencies you\'d like in your fresh-from-the-oven module?',
@@ -121,6 +128,7 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 
 		this.template('_package.json', 'package.json');
 		this.template('_Gruntfile.coffee', 'Gruntfile.coffee');
+		this.template('_.gitignore', '.gitignore');
 		// this.copy('_bower.json', 'bower.json');
 	},
 

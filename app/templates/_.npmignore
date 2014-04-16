@@ -1,0 +1,4 @@
+node_modules/
+<% if(!publishSource) { %>src/<% } %>
+
+*.log
