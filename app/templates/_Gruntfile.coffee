@@ -28,7 +28,7 @@ module.exports = (grunt) ->
 					reporter: 'spec'
 					require: ['coffee-script/register']
 
-				src: ['test/**/*-test.(js|coffee)']
+				src: ['test/**/*.test.(js|coffee)']
 
 		watch:
 			dev:
@@ -45,10 +45,17 @@ module.exports = (grunt) ->
 
 	grunt.registerTask 'default', ["build"]
 
-	grunt.registerTask 'build', ['lint', 'test', 'coffee:build']
+	grunt.registerTask 'build', [
+		'lint'
+		'test'
+		<% if(language === 'coffee') { %>'coffee:build'<% } %>
+	]
+
 	grunt.registerTask 'dev', ['lint', 'test']
 
-	grunt.registerTask 'lint', ['coffeelint:build']
+	grunt.registerTask 'lint', [
+		<% if(language === 'coffee') { %>'coffeelint:build'<% } else { %># Do some linting...<% } %>
+	]
 	grunt.registerTask 'test', ['mochaTest:test']
 
 	grunt.registerTask 'watch-dev', ['watch:dev']

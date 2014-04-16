@@ -12,8 +12,10 @@
 	"devDependencies": {
 		"grunt": "*",
 		"load-grunt-tasks": "*",
+<% if(language === 'coffee') { %>
 		"grunt-contrib-coffee": "*",
 		"grunt-coffeelint": "*",
+<% } %>
 		"grunt-contrib-watch": "*",
 		"chai": "*",
 		"grunt-mocha-test": "*"
