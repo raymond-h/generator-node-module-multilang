@@ -43,19 +43,15 @@ module.exports = (grunt) ->
 				files: ['src/**/*.{js,coffee}', 'test/**/*.{js,coffee}']
 				tasks: ['lint']
 
-	grunt.registerTask 'default', ["build"]
-
-	grunt.registerTask 'build', [
-		'lint'
-		'test'
-		<% if(language === 'coffee') { %>'coffee:build'<% } %>
-	]
-
+	grunt.registerTask 'default', ['lint', 'test', 'build']
 	grunt.registerTask 'dev', ['lint', 'test']
 
 	grunt.registerTask 'lint', [
 		<% if(language === 'coffee') { %>'coffeelint:build'<% } else { %># Do some linting...<% } %>
 	]
+
 	grunt.registerTask 'test', ['mochaTest:test']
 
-	grunt.registerTask 'watch-dev', ['watch:dev']
+	grunt.registerTask 'build', [
+		<% if(language === 'coffee') { %>'coffee:build'<% } %>
+	]
