@@ -28,19 +28,19 @@ module.exports = (grunt) ->
 					reporter: 'spec'
 					require: ['coffee-script/register']
 
-				src: ['test/**/*.test.(js|coffee)']
+				src: ['test/**/*.test.{js,coffee}']
 
 		watch:
 			dev:
-				files: ['src/**/*.(js|coffee)', 'test/**/*.(js|coffee)']
+				files: ['src/**/*.{js,coffee}', 'test/**/*.{js,coffee}']
 				tasks: ['lint', 'test']
 
 			test:
-				files: ['src/**/*.(js|coffee)', 'test/**/*.(js|coffee)']
+				files: ['src/**/*.{js,coffee}', 'test/**/*.{js,coffee}']
 				tasks: ['test']
 
 			lint:
-				files: ['src/**/*.(js|coffee)', 'test/**/*.(js|coffee)']
+				files: ['src/**/*.{js,coffee}', 'test/**/*.{js,coffee}']
 				tasks: ['lint']
 
 	grunt.registerTask 'default', ["build"]
