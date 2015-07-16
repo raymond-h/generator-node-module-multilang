@@ -1,4 +1,4 @@
 node_modules/
-<% if(language === 'coffee' && !checkinCompiled) { %>lib/<% } %>
+<% if(compiled && !checkinCompiled) { %>lib/<% } %>
 
 *.log

@@ -1,4 +1,4 @@
 node_modules/
-<% if(language === 'coffee' && !publishSource) { %>src/<% } %>
+<% if(compiled && !publishSource) { %>src/<% } %>
 
 *.log

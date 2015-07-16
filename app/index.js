@@ -43,6 +43,11 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 		// replace it with a short and sweet description of your generator
 		this.log(chalk.magenta('Coming up - a new node.js module!'));
 
+		function isCompiled(answers) {
+			return answers.language === 'coffee'
+				|| answers.language === 'babel';
+		}
+
 		var prompts = [
 			{
 				type: 'input',
@@ -68,22 +73,30 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				message: 'Which language should this module be written in?',
 				choices: [
 					{ name: 'JavaScript', value: 'js' },
+					{ name: 'JavaScript (Babel)', value: 'babel' },
 					{ name: 'CoffeeScript', value: 'coffee' }
 				]
+			},
+			{
+				type: 'confirm',
+				name: 'experimental',
+				message: 'Enable experimental (stage 0) features?',
+				default: false,
+				when: function(answers) { return answers.language === 'babel'; }
 			},
 			{
 				type: 'confirm',
 				name: 'publishSource',
 				message: 'Should the original source be included as well when publishing to the npm registry?',
 				default: false,
-				when: function(answers) { return answers.language === 'coffee'; }
+				when: isCompiled
 			},
 			{
 				type: 'confirm',
 				name: 'checkinCompiled',
 				message: 'Should the compiled output be checked in to git as well?',
 				default: false,
-				when: function(answers) { return answers.language === 'coffee'; }
+				when: isCompiled
 			}
 		];
 
@@ -91,6 +104,8 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 			for(var k in answers) {
 				this[k] = answers[k];
 			}
+
+			this.compiled = isCompiled(answers)
 
 			done();
 		}.bind(this));
@@ -105,6 +120,11 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 			case 'coffee':
 				this.mkdir('src');
 				this.copy('index.coffee', 'src/index.coffee');
+				break;
+
+			case 'babel':
+				this.mkdir('src');
+				this.copy('index.js', 'src/index.js');
 				break;
 
 			case 'js':
