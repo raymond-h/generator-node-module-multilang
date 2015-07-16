@@ -1,4 +1,4 @@
-# generator-node-module [![Build Status](https://secure.travis-ci.org/raymond-h/generator-node-module.png?branch=master)](https://travis-ci.org/raymond-h/generator-node-module)
+# generator-node-module-multilang [![Build Status](https://secure.travis-ci.org/raymond-h/generator-node-module-multilang.png?branch=master)](https://travis-ci.org/raymond-h/generator-node-module-multilang)
 
 > [Yeoman](http://yeoman.io) generator
 
@@ -23,10 +23,10 @@ $ npm install -g yo
 
 Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
 
-To install generator-node-module from npm, run:
+To install generator-node-module-multilang from npm, run:
 
 ```
-$ npm install -g generator-node-module
+$ npm install -g generator-node-module-multilang
 ```
 
 Finally, initiate the generator:
