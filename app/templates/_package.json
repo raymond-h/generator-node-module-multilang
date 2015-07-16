@@ -6,21 +6,29 @@
 	"main": "lib/index.js",
 	"author": "<%= author %>",
 	"scripts": {
-		"prepublish": "grunt build",
-		"test": "grunt test"
+<% if(language === 'coffee') { %>
+		"lint": "coffeelint src/",
+		"test": "mocha --compilers coffee:coffee-script test/**/*.*",
+		"build": "coffee -c -o lib/ src/",
+<% } else { %>
+		"lint": "echo nop",
+		"test": "mocha test/**/*.*",
+		"build": "echo nop",
+<% } %>
+
+		"prebuild": "npm run lint",
+		"watch": "onchange src/ -- npm run build && echo Done",
+		"dev": "npm run watch",
+		"prepublish": "npm run build"
 	},
 	"devDependencies": {
-		"grunt": "*",
-		"load-grunt-tasks": "*",
 <% if(language === 'coffee') { %>
-		"grunt-contrib-coffee": "*",
-		"grunt-coffeelint": "*",
+		"coffee-script": "latest",
+		"coffeeify": "latest",
+		"coffeelint": "latest",
 <% } %>
-		"grunt-contrib-watch": "*",
-		"chai": "*",
-		"grunt-mocha-test": "*"
-	},
-	"dependencies": {
-<% _.forEach(deps, function(dep, i) { print('\t\t"' + dep + '": "*"' + (i < deps.length-1 ? ',\n' : '')); }); %>
+		"mocha": "latest",
+		"chai": "latest",
+		"onchange": "latest"
 	}
 }

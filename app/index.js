@@ -84,19 +84,6 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				message: 'Should the compiled output be checked in to git as well?',
 				default: false,
 				when: function(answers) { return answers.language === 'coffee'; }
-			},
-			{
-				type: 'checkbox',
-				name: 'extraDeps',
-				message: 'Any extra dependencies you\'d like in your fresh-from-the-oven module?',
-				choices: [
-					{ name: 'Underscore.js', value: 'underscore' },
-					{ name: 'Underscore.string', value: 'underscore.string' },
-					{ name: 'Underscore-contrib', value: 'underscore-contrib' },
-					{ name: 'Lo-Dash', value: 'lodash' },
-					{ name: 'Q', value: 'q' },
-					{ name: 'Request', value: 'request' }
-				]
 			}
 		];
 
@@ -129,7 +116,6 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 		this.mkdir('test');
 
 		this.template('_package.json', 'package.json');
-		this.template('_Gruntfile.coffee', 'Gruntfile.coffee');
 		this.template('_.gitignore', '.gitignore');
 		this.template('_.npmignore', '.npmignore');
 		this.template('_README.md', 'README.md');
