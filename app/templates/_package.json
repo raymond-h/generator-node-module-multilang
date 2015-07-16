@@ -7,16 +7,17 @@
 	"author": "<%= author %>",
 	"scripts": {
 <% if(language === 'coffee') { %>
-		"lint": "coffeelint src/",
-		"test": "mocha --compilers coffee:coffee-script test/**/*.*",
+		"lint": "coffeelint src/ test/",
+		"test": "mocha --compilers coffee:coffee-script test/",
 		"build": "coffee -c -o lib/ src/",
 <% } else { %>
-		"lint": "echo nop",
-		"test": "mocha test/**/*.*",
+		"lint": "jshint lib/ test/",
+		"test": "mocha test/",
 		"build": "echo nop",
 <% } %>
 
-		"prebuild": "npm run lint",
+		"pretest": "npm run lint",
+		"prebuild": "npm run test",
 		"watch": "onchange src/ -- npm run build && echo Done",
 		"dev": "npm run watch",
 		"prepublish": "npm run build"
@@ -24,8 +25,9 @@
 	"devDependencies": {
 <% if(language === 'coffee') { %>
 		"coffee-script": "latest",
-		"coffeeify": "latest",
 		"coffeelint": "latest",
+<% } else { %>
+		"jshint": "latest",
 <% } %>
 		"mocha": "latest",
 		"chai": "latest",
