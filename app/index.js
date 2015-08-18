@@ -17,12 +17,6 @@ function nodeModuleName(filePath) {
 var NodeModuleGenerator = yeoman.generators.Base.extend({
 	init: function () {
 		this.pkg = require('../package.json');
-
-		this.on('end', function () {
-			if (!this.options['skip-install']) {
-				this.installDependencies();
-			}
-		});
 	},
 
 	loadNpm: function() {
@@ -139,6 +133,18 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 		this.template('_.gitignore', '.gitignore');
 		this.template('_.npmignore', '.npmignore');
 		this.template('_README.md', 'README.md');
+	},
+
+	installDevDeps: function() {
+		var devDeps = ['mocha', 'chai', 'onchange'];
+
+		switch(this.language) {
+			case 'coffee': devDeps.push('coffee-script', 'coffeelint'); break;
+			case 'babel': devDeps.push('babel', 'eslint'); break;
+			case 'js': devDeps.push('jshint'); break;
+		}
+
+		this.npmInstall(devDeps, { saveDev: true });
 	}
 });
 

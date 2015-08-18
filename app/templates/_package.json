@@ -25,19 +25,5 @@
 		"watch": "onchange src/ -- npm run build && echo Done",
 		"dev": "npm run watch",
 		"prepublish": "npm run build"
-	},
-	"devDependencies": {
-<% if(language === 'coffee') { %>
-		"coffee-script": "latest",
-		"coffeelint": "latest",
-<% } else if(language === 'babel') { %>
-		"babel": "latest",
-		"eslint": "latest",
-<% } else { %>
-		"jshint": "latest",
-<% } %>
-		"mocha": "latest",
-		"chai": "latest",
-		"onchange": "latest"
 	}
 }
