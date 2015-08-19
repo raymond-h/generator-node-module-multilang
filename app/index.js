@@ -117,6 +117,7 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				break;
 
 			case 'babel':
+				this.template('_.babelrc', '.babelrc');
 				this.mkdir('src');
 				this.copy('index.js', 'src/index.js');
 				break;
