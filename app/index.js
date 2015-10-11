@@ -9,7 +9,7 @@ function nodeModuleName(filePath) {
 	var basename = path.basename(filePath);
 
 	if(basename.substr(0,5) === 'node-')
-		basename = basename.substr(5);
+	basename = basename.substr(5);
 
 	return basename;
 }
@@ -19,22 +19,22 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 		this.pkg = require('../package.json');
 	},
 
-  getUsername: function() {
-    var done = this.async();
-    this.user.github.username(function(err, username) {
-      if(err) {
-        return done(err);
-      }
-      this.username = username;
-      done();
-    }.bind(this));
-  },
+	getUsername: function() {
+		var done = this.async();
+		this.user.github.username(function(err, username) {
+			if(err) {
+				return done(err);
+			}
+			this.username = username;
+			done();
+		}.bind(this));
+	},
 
 	askFor: function () {
 		var done = this.async();
 
 		// have Yeoman greet the user
-    this.log(yosay('Coming up - a new node.js module!'));
+		this.log(yosay('Coming up - a new node.js module!'));
 
 		function isCompiled(answers) {
 			return answers.language === 'coffee'
@@ -91,19 +91,19 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				default: false,
 				when: isCompiled
 			},
-      {
-        type: 'confirm',
-        name: 'useTravisCI',
-        message: 'Do you want to add a Travis CI config and README badge?',
-        default: true
-      },
-      {
-        type: 'input',
-        name: 'username',
-        message: 'What is your GitHub username?',
-        default: this.username,
-        when: function(answers) { return answers.useTravisCI; }
-      },
+			{
+				type: 'confirm',
+				name: 'useTravisCI',
+				message: 'Do you want to add a Travis CI config and README badge?',
+				default: true
+			},
+			{
+				type: 'input',
+				name: 'username',
+				message: 'What is your GitHub username?',
+				default: this.username,
+				when: function(answers) { return answers.useTravisCI; }
+			},
 		];
 
 		this.prompt(prompts, function(answers) {
@@ -142,9 +142,9 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 
 		mkdirp.sync('test');
 
-    if(this.useTravisCI) {
-      this.copy('.travis.yml', '.travis.yml');
-    }
+		if(this.useTravisCI) {
+			this.copy('.travis.yml', '.travis.yml');
+		}
 
 		this.template('_package.json', 'package.json');
 		this.template('_.gitignore', '.gitignore');
