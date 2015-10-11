@@ -2,8 +2,9 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
+var yosay = require('yosay');
 var npm = require('npm');
+var mkdirp = require('mkdirp');
 
 function nodeModuleName(filePath) {
 	var basename = path.basename(filePath);
@@ -28,14 +29,22 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 		}.bind(this));
 	},
 
+  getUsername: function() {
+    var done = this.async();
+    this.user.github.username(function(err, username) {
+      if(err) {
+        return done(err);
+      }
+      this.username = username;
+      done();
+    }.bind(this));
+  },
+
 	askFor: function () {
 		var done = this.async();
 
 		// have Yeoman greet the user
-		this.log(this.yeoman);
-
-		// replace it with a short and sweet description of your generator
-		this.log(chalk.magenta('Coming up - a new node.js module!'));
+    this.log(yosay('Coming up - a new node.js module!'));
 
 		function isCompiled(answers) {
 			return answers.language === 'coffee'
@@ -59,7 +68,7 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				type: 'input',
 				name: 'author',
 				message: 'Who is the author?',
-				default: this.npm.config.get('init.author.name')
+				default: this.npm.config.get('init.author.name') || this.user.git.name()
 			},
 			{
 				type: 'list',
@@ -91,7 +100,20 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				message: 'Should the compiled output be checked in to git as well?',
 				default: false,
 				when: isCompiled
-			}
+			},
+      {
+        type: 'confirm',
+        name: 'useTravisCI',
+        message: 'Do you want to add a Travis CI config and README badge?',
+        default: true
+      },
+      {
+        type: 'input',
+        name: 'username',
+        message: 'What is your GitHub username?',
+        default: this.username,
+        when: function(answers) { return answers.useTravisCI; }
+      },
 		];
 
 		this.prompt(prompts, function(answers) {
@@ -99,7 +121,7 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				this[k] = answers[k];
 			}
 
-			this.compiled = isCompiled(answers)
+			this.compiled = isCompiled(answers);
 
 			done();
 		}.bind(this));
@@ -112,28 +134,33 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 	module: function () {
 		switch(this.language) {
 			case 'coffee':
-				this.mkdir('src');
+				mkdirp.sync('src');
 				this.copy('index.coffee', 'src/index.coffee');
 				break;
 
 			case 'babel':
 				this.template('_.babelrc', '.babelrc');
-				this.mkdir('src');
+				mkdirp.sync('src');
 				this.copy('index.js', 'src/index.js');
 				break;
 
 			case 'js':
-				this.mkdir('lib');
+				mkdirp.sync('lib');
 				this.copy('index.js', 'lib/index.js');
 				break;
 		}
 
-		this.mkdir('test');
+		mkdirp.sync('test');
+
+    if(this.useTravisCI) {
+      this.copy('.travis.yml', '.travis.yml');
+    }
 
 		this.template('_package.json', 'package.json');
 		this.template('_.gitignore', '.gitignore');
 		this.template('_.npmignore', '.npmignore');
 		this.template('_README.md', 'README.md');
+
 	},
 
 	installDevDeps: function() {
