@@ -15,7 +15,7 @@
 		"test": "mocha --compilers js:babel/register,es6:babel/register,es6.js:babel/register test/",
 		"build": "babel -d lib/ src/",
 <% } else { %>
-		"lint": "jshint lib/ test/",
+		"lint": "eslint lib/ test/",
 		"test": "mocha test/",
 		"build": "echo nop",
 <% } %>
