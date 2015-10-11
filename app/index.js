@@ -3,7 +3,6 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
-var npm = require('npm');
 var mkdirp = require('mkdirp');
 
 function nodeModuleName(filePath) {
@@ -18,15 +17,6 @@ function nodeModuleName(filePath) {
 var NodeModuleGenerator = yeoman.generators.Base.extend({
 	init: function () {
 		this.pkg = require('../package.json');
-	},
-
-	loadNpm: function() {
-		var done = this.async();
-
-		npm.load(function(err, npm) {
-			this.npm = npm;
-			done();
-		}.bind(this));
 	},
 
   getUsername: function() {
@@ -68,7 +58,7 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				type: 'input',
 				name: 'author',
 				message: 'Who is the author?',
-				default: this.npm.config.get('init.author.name') || this.user.git.name()
+				default: this.user.git.name()
 			},
 			{
 				type: 'list',
