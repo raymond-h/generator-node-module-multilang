@@ -19,19 +19,9 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 		this.pkg = require('../package.json');
 	},
 
-	getUsername: function() {
-		var done = this.async();
-		this.user.github.username(function(err, username) {
-			if(err) {
-				return done(err);
-			}
-			this.username = username;
-			done();
-		}.bind(this));
-	},
-
 	askFor: function () {
 		var done = this.async();
+		var self = this;
 
 		// have Yeoman greet the user
 		this.log(yosay('Coming up - a new node.js module!'));
@@ -101,7 +91,15 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				type: 'input',
 				name: 'username',
 				message: 'What is your GitHub username?',
-				default: this.username,
+				default: function() {
+					var defaultDone = this.async();
+					self.user.github.username(function(err, username) {
+						if(err) {
+							return defaultDone('');
+						}
+						defaultDone(username);
+					});
+				},
 				when: function(answers) { return answers.useTravisCI; }
 			},
 		];
