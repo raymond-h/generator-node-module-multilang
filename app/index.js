@@ -158,7 +158,7 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 
 		switch(this.language) {
 			case 'coffee': devDeps.push('coffee-script', 'coffeelint'); break;
-			case 'babel': devDeps.push('babel', 'eslint'); break;
+			case 'babel': devDeps.push('babel@5', 'eslint'); break;
 			case 'js': devDeps.push('jshint'); break;
 		}
 
