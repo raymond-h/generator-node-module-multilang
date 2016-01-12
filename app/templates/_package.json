@@ -12,7 +12,7 @@
 		"build": "coffee -c -o lib/ src/",
 <% } else if(language === 'babel') { %>
 		"lint": "eslint src/ test/",
-		"test": "mocha --compilers js:babel/register,es6:babel/register,es6.js:babel/register test/",
+		"test": "mocha --compilers js:babel-register,es6:babel-register,es6.js:babel-register test/",
 		"build": "babel -d lib/ src/",
 <% } else { %>
 		"lint": "eslint lib/ test/",
