@@ -130,6 +130,7 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 
 			case 'babel':
 				this.template('_.babelrc', '.babelrc');
+				this.template('_.eslintrc', '.eslintrc');
 				mkdirp.sync('src');
 				this.copy('index.js', 'src/index.js');
 				break;
@@ -158,7 +159,10 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 
 		switch(this.language) {
 			case 'coffee': devDeps.push('coffee-script', 'coffeelint'); break;
-			case 'babel': devDeps.push('babel@5', 'eslint'); break;
+			case 'babel':
+				devDeps.push('babel-cli', 'babel-register', 'babel-preset-es2015', 'babel-eslint', 'eslint');
+				if(this.experimental) { devDeps.push('babel-preset-stage-0'); }
+				break;
 			case 'js': devDeps.push('jshint'); break;
 		}
 
