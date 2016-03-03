@@ -32,7 +32,7 @@ $ npm install -g generator-node-module-multilang
 Finally, initiate the generator:
 
 ```
-$ yo node-module
+$ yo node-module-multilang
 ```
 
 ### Getting To Know Yeoman
