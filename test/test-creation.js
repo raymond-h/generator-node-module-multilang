@@ -5,32 +5,22 @@ import path from 'path';
 
 import { allExist, noneExist } from './_helpers';
 
-function waitEnd(runContext) {
+function runWithPrompts(prompts) {
 	return new Promise((resolve, reject) => {
-		runContext.on('end', (err) => {
-			if(err != null) return reject(err);
+		helpers.run(path.join(__dirname, '../app'))
+		.withOptions({ 'skip-install': true })
+		.withPrompts(prompts)
 
+		.on('end', (err) => {
+			if(err != null) return reject(err);
 			resolve();
 		});
 	});
 }
 
-export function propertyTest(promptsArb, expectedExist, expectedNotExist = []) {
-	return jsv.assert(
-		jsv.forall(promptsArb, async (prompts) => {
+const verifyTestCount = 5;
 
-			await waitEnd(
-				helpers.run(path.join(__dirname, '../app'))
-					.withOptions({ 'skip-install': true })
-					.withPrompts(prompts)
-			);
-
-			return allExist(expectedExist)
-				&& noneExist(expectedNotExist);
-		}),
-		{ tests: 5 }
-	);
-}
+// *** TESTS
 
 test.serial('creates expected files for Coffee', async t => {
 	const promptsArb = jsv.record({
@@ -52,7 +42,14 @@ test.serial('creates expected files for Coffee', async t => {
 		'README.md'
 	];
 
-	await propertyTest(promptsArb, expected);
+	await jsv.assert(
+		jsv.forall(promptsArb, async (prompts) => {
+			await runWithPrompts(prompts);
+
+			return allExist(expected);
+		}),
+		{ tests: verifyTestCount }
+	);
 });
 
 test.serial('creates expected files for Babel', async t => {
@@ -76,7 +73,14 @@ test.serial('creates expected files for Babel', async t => {
 		'README.md'
 	];
 
-	await propertyTest(promptsArb, expected);
+	await jsv.assert(
+		jsv.forall(promptsArb, async (prompts) => {
+			await runWithPrompts(prompts);
+
+			return allExist(expected);
+		}),
+		{ tests: verifyTestCount }
+	);
 });
 
 test.serial('creates expected files for vanilla Javascript', async t => {
@@ -97,5 +101,12 @@ test.serial('creates expected files for vanilla Javascript', async t => {
 		'README.md'
 	];
 
-	await propertyTest(promptsArb, expected, ['src']);
+	await jsv.assert(
+		jsv.forall(promptsArb, async (prompts) => {
+			await runWithPrompts(prompts);
+
+			return allExist(expected) && noneExist(['src']);
+		}),
+		{ tests: verifyTestCount }
+	);
 });
