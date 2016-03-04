@@ -1,48 +1,38 @@
 /*global describe, beforeEach, it */
 'use strict';
 var path = require('path');
+var assert = require('yeoman-assert');
 var helpers = require('yeoman-generator').test;
 
-describe('node-module generator', function () {
-  beforeEach(function (done) {
-    helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
-      if (err) {
-        return done(err);
-      }
+describe('node-module generator', function() {
+	it('creates expected files for Coffee', function(done) {
+		var expected = [
+            'src/index.coffee',
+			'test',
+			'.gitignore',
+			'.npmignore',
+			'package.json',
+			'README.md'
+		];
 
-      this.app = helpers.createGenerator('node-module:app', [
-        '../../app'
-      ]);
-      done();
-    }.bind(this));
-  });
+		var prompts = {
+			'name': 'pizza-slicer',
+			'description': 'A lightweight module for slicing pizzas!',
+			'author': 'John Dough',
+			'language': 'coffee',
+			'publishSource': false,
+			'checkinCompiled': false,
+            'useTravisCI': false
+		};
 
-  it('creates expected files', function (done) {
-    var expected = [
-      'src',
-      'test',
-      '.gitignore',
-      '.npmignore',
-      'Gruntfile.coffee',
-      'package.json',
-      'README.md'
-    ];
+		helpers.run(path.join(__dirname, '../app'))
+			.withOptions({ 'skip-install': true })
+			.withPrompts(prompts)
+			.on('end', (err) => {
+				if(err != null) return done(err);
 
-    helpers.mockPrompt(this.app, {
-      'name': 'pizza-slicer',
-      'description': 'A lightweight module for slicing pizzas!',
-      'author': 'John Dough',
-      'language': 'coffee',
-      'publishSource': false,
-      'checkinCompiled': false,
-      'extraDeps': ['underscore', 'q', 'request']
-    });
-
-    this.app.options['skip-install'] = true;
-
-    this.app.run({}, function () {
-      helpers.assertFile(expected);
-      done();
-    });
-  });
+				assert.file(expected);
+				done();
+			});
+	});
 });

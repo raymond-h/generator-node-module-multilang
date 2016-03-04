@@ -28,7 +28,8 @@
     "yosay": "^1.0.5"
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "yeoman-assert": "^2.1.1"
   },
   "peerDependencies": {
     "yo": ">=1.0.0"

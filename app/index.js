@@ -149,7 +149,6 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 		this.template('_.gitignore', '.gitignore');
 		this.template('_.npmignore', '.npmignore');
 		this.template('_README.md', 'README.md');
-
 	},
 
 	installDevDeps: function() {
@@ -164,7 +163,9 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 			case 'js': devDeps.push('jshint'); break;
 		}
 
-		this.npmInstall(devDeps, { saveDev: true });
+		if(!this.options['skip-install']) {
+			this.npmInstall(devDeps, { saveDev: true });
+		}
 	}
 });
 
