@@ -1,38 +1,42 @@
-/*global describe, beforeEach, it */
-'use strict';
-var path = require('path');
-var assert = require('yeoman-assert');
-var helpers = require('yeoman-generator').test;
+import test from 'ava';
+import path from 'path';
+import assert from 'yeoman-assert';
+import { test as helpers } from 'yeoman-generator';
 
-describe('node-module generator', function() {
-	it('creates expected files for Coffee', function(done) {
-		var expected = [
-            'src/index.coffee',
-			'test',
-			'.gitignore',
-			'.npmignore',
-			'package.json',
-			'README.md'
-		];
+function waitEnd(runContext) {
+	return new Promise((resolve, reject) => {
+		runContext.on('end', (err) => {
+			if(err != null) reject(err);
+			else resolve();
+		});
+	});
+}
 
-		var prompts = {
-			'name': 'pizza-slicer',
-			'description': 'A lightweight module for slicing pizzas!',
-			'author': 'John Dough',
-			'language': 'coffee',
-			'publishSource': false,
-			'checkinCompiled': false,
-            'useTravisCI': false
-		};
+test('creates expected files for Coffee', async t => {
+	var expected = [
+		'src/index.coffee',
+		'test',
+		'.gitignore',
+		'.npmignore',
+		'package.json',
+		'README.md'
+	];
 
+	var prompts = {
+		'name': 'pizza-slicer',
+		'description': 'A lightweight module for slicing pizzas!',
+		'author': 'John Dough',
+		'language': 'coffee',
+		'publishSource': false,
+		'checkinCompiled': false,
+		'useTravisCI': false
+	};
+
+	await waitEnd(
 		helpers.run(path.join(__dirname, '../app'))
 			.withOptions({ 'skip-install': true })
 			.withPrompts(prompts)
-			.on('end', (err) => {
-				if(err != null) return done(err);
+	);
 
-				assert.file(expected);
-				done();
-			});
-	});
+	assert.file(expected);
 });

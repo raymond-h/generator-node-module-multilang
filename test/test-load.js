@@ -1,10 +1,6 @@
-/*global describe, beforeEach, it*/
-'use strict';
-var assert = require('assert');
+import test from 'ava';
 
-describe('node-module generator', function () {
-  it('can be imported without blowing up', function () {
+test('can be imported without blowing up', t => {
     var app = require('../app');
-    assert(app !== undefined);
-  });
+    t.ok(app !== undefined);
 });

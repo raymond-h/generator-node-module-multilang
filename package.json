@@ -14,7 +14,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "ava"
   },
   "files": [
     "app"
@@ -28,7 +28,8 @@
     "yosay": "^1.0.5"
   },
   "devDependencies": {
-    "mocha": "*",
+    "ava": "^0.12.0",
+    "jsverify": "^0.7.1",
     "yeoman-assert": "^2.1.1"
   },
   "peerDependencies": {
