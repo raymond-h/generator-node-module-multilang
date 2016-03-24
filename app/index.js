@@ -14,7 +14,7 @@ function nodeModuleName(filePath) {
 	return basename;
 }
 
-var NodeModuleGenerator = yeoman.generators.Base.extend({
+var NodeModuleGenerator = yeoman.Base.extend({
 	init: function () {
 		this.pkg = require('../package.json');
 	},

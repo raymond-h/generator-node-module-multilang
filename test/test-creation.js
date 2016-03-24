@@ -1,6 +1,6 @@
 import test from 'ava';
 import jsv from 'jsverify';
-import { test as helpers } from 'yeoman-generator';
+import helpers from 'yeoman-test';
 import path from 'path';
 
 import { allExist, noneExist } from './_helpers';
