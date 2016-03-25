@@ -14,7 +14,7 @@ function nodeModuleName(filePath) {
 	return basename;
 }
 
-var NodeModuleGenerator = yeoman.generators.Base.extend({
+var NodeModuleGenerator = yeoman.Base.extend({
 	init: function () {
 		this.pkg = require('../package.json');
 	},
@@ -88,6 +88,12 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 				default: true
 			},
 			{
+				type: 'confirm',
+				name: 'addRepo',
+				message: 'Do you want to set the repository in your package.json to a GitHub repo?',
+				default: true
+			},
+			{
 				type: 'input',
 				name: 'username',
 				message: 'What is your GitHub username?',
@@ -100,7 +106,9 @@ var NodeModuleGenerator = yeoman.generators.Base.extend({
 						defaultDone(username);
 					});
 				},
-				when: function(answers) { return answers.useTravisCI; }
+				when: function(answers) {
+					return answers.useTravisCI || answers.addRepo;
+				}
 			},
 		];
 

@@ -5,6 +5,9 @@
 	"license": "MIT",
 	"main": "lib/index.js",
 	"author": "<%= author %>",
+<% if(addRepo) { %>
+	"repository": "<%= username %>/<%= name %>",
+<% } %>
 	"scripts": {
 <% if(language === 'coffee') { %>
 		"lint": "coffeelint src/ test/",
