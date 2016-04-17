@@ -30,7 +30,9 @@ test.serial('creates expected files for Coffee', async t => {
 		'language': jsv.constant('coffee'),
 		'publishSource': jsv.bool,
 		'checkinCompiled': jsv.bool,
-		'useTravisCI': jsv.constant(false)
+		'useTravisCI': jsv.bool,
+		'addRepo': jsv.bool,
+		'username': jsv.nestring
 	});
 
 	const expected = [
@@ -61,7 +63,9 @@ test.serial('creates expected files for Babel', async t => {
 		'experimental': jsv.bool,
 		'publishSource': jsv.bool,
 		'checkinCompiled': jsv.bool,
-		'useTravisCI': jsv.constant(false)
+		'useTravisCI': jsv.bool,
+		'addRepo': jsv.bool,
+		'username': jsv.nestring
 	});
 
 	const expected = [
@@ -89,7 +93,9 @@ test.serial('creates expected files for vanilla Javascript', async t => {
 		'description': jsv.nestring,
 		'author': jsv.nestring,
 		'language': jsv.constant('js'),
-		'useTravisCI': jsv.constant(false)
+		'useTravisCI': jsv.bool,
+		'addRepo': jsv.bool,
+		'username': jsv.nestring
 	});
 
 	const expected = [
