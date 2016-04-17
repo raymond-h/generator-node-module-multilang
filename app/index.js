@@ -99,12 +99,21 @@ var NodeModuleGenerator = yeoman.Base.extend({
 				message: 'What is your GitHub username?',
 				default: function() {
 					var defaultDone = this.async();
-					self.user.github.username(function(err, username) {
-						if(err) {
-							return defaultDone('');
-						}
-						defaultDone(username);
-					});
+					try {
+						self.user.github.username(function(err, username) {
+							if(err) {
+								return defaultDone('');
+							}
+							defaultDone(username);
+						});
+					}
+					catch(err) {
+						// Catch, because something something no proper 'user.email'
+						// being configured on git on Travis
+						// causes an error that is NOT ultimately passed to the callback
+						// of 'self.user.github.username()'
+						defaultDone('');
+					}
 				},
 				when: function(answers) {
 					return answers.useTravisCI || answers.addRepo;
