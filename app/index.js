@@ -18,11 +18,15 @@ function nodeModuleName(filePath) {
 }
 
 var NodeModuleGenerator = yeoman.Base.extend({
-	init: function () {
+	initializing: function () {
 		this.pkg = require('../package.json');
+
+		if(!this.options['skip-install']) {
+			this.npmInstall();
+		}
 	},
 
-	askFor: function () {
+	prompting: function () {
 		var done = this.async();
 		var self = this;
 
@@ -135,11 +139,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
 		}.bind(this));
 	},
 
-	dependencies: function() {
-		this.deps = [].concat(this.extraDeps);
-	},
-
-	module: function () {
+	writingMainFiles: function () {
 		switch(this.language) {
 			case 'coffee':
 				mkdirp.sync('src');
@@ -171,7 +171,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
 		this.template('_README.md', 'README.md');
 	},
 
-	installDevDeps: function() {
+	writingDevDeps: function() {
 		function assignToDependencies(pkg, depObjName, deps) {
 			var currentDeps = pkg[depObjName] || {};
 			var newDepsObj = sortedObject(
@@ -191,17 +191,12 @@ var NodeModuleGenerator = yeoman.Base.extend({
 			case 'js': devDeps.push('jshint'); break;
 		}
 
-		if(!this.options['skip-install']) {
-			this.npmInstall(devDeps, { saveDev: true });
-		}
-		else {
-			return depsObject(devDeps)
-				.then(function(devDepsObj) {
-					var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-					assignToDependencies(pkg, 'devDependencies', devDepsObj);
-					this.fs.writeJSON(this.destinationPath('package.json'), pkg);
-				}.bind(this));
-		}
+		return depsObject(devDeps)
+			.then(function(devDepsObj) {
+				var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+				assignToDependencies(pkg, 'devDependencies', devDepsObj);
+				this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+			}.bind(this));
 	}
 });
 
