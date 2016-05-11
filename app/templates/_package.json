@@ -1,12 +1,12 @@
 {
-	"name": "<%= name %>",
-	"description": "<%= description %>",
+	"name": <%- JSON.stringify(name) %>,
+	"description": <%- JSON.stringify(description) %>,
 	"version": "0.0.0",
 	"license": "MIT",
 	"main": "lib/index.js",
-	"author": "<%= author %>",
+	"author": <%- JSON.stringify(author) %>,
 <% if(addRepo) { %>
-	"repository": "<%= username %>/<%= name %>",
+	"repository": <%- JSON.stringify(username + '/' + name) %>,
 <% } %>
 	"scripts": {
 <% if(language === 'coffee') { %>

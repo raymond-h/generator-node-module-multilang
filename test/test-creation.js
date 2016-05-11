@@ -6,16 +6,10 @@ import path from 'path';
 import { allExist, noneExist } from './_helpers';
 
 function runWithPrompts(prompts) {
-	return new Promise((resolve, reject) => {
-		helpers.run(path.join(__dirname, '../app'))
+	return helpers.run(path.join(__dirname, '../app'))
 		.withOptions({ 'skip-install': true })
 		.withPrompts(prompts)
-
-		.on('end', (err) => {
-			if(err != null) return reject(err);
-			resolve();
-		});
-	});
+		.toPromise();
 }
 
 const verifyTestCount = 5;
@@ -24,7 +18,7 @@ const verifyTestCount = 5;
 
 test.serial('creates expected files for Coffee', async t => {
 	const promptsArb = jsv.record({
-		'name': jsv.nestring,
+		'name': jsv.asciinestring,
 		'description': jsv.nestring,
 		'author': jsv.nestring,
 		'language': jsv.constant('coffee'),
@@ -32,7 +26,7 @@ test.serial('creates expected files for Coffee', async t => {
 		'checkinCompiled': jsv.bool,
 		'useTravisCI': jsv.bool,
 		'addRepo': jsv.bool,
-		'username': jsv.nestring
+		'username': jsv.asciinestring
 	});
 
 	const expected = [
@@ -56,7 +50,7 @@ test.serial('creates expected files for Coffee', async t => {
 
 test.serial('creates expected files for Babel', async t => {
 	const promptsArb = jsv.record({
-		'name': jsv.nestring,
+		'name': jsv.asciinestring,
 		'description': jsv.nestring,
 		'author': jsv.nestring,
 		'language': jsv.constant('babel'),
@@ -65,7 +59,7 @@ test.serial('creates expected files for Babel', async t => {
 		'checkinCompiled': jsv.bool,
 		'useTravisCI': jsv.bool,
 		'addRepo': jsv.bool,
-		'username': jsv.nestring
+		'username': jsv.asciinestring
 	});
 
 	const expected = [
@@ -89,13 +83,13 @@ test.serial('creates expected files for Babel', async t => {
 
 test.serial('creates expected files for vanilla Javascript', async t => {
 	const promptsArb = jsv.record({
-		'name': jsv.nestring,
+		'name': jsv.asciinestring,
 		'description': jsv.nestring,
 		'author': jsv.nestring,
 		'language': jsv.constant('js'),
 		'useTravisCI': jsv.bool,
 		'addRepo': jsv.bool,
-		'username': jsv.nestring
+		'username': jsv.asciinestring
 	});
 
 	const expected = [

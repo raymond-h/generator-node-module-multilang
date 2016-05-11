@@ -27,7 +27,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
 	},
 
 	prompting: function () {
-		var done = this.async();
+		// var done = this.async();
 		var self = this;
 
 		// have Yeoman greet the user
@@ -128,15 +128,14 @@ var NodeModuleGenerator = yeoman.Base.extend({
 			},
 		];
 
-		this.prompt(prompts, function(answers) {
-			for(var k in answers) {
-				this[k] = answers[k];
-			}
+		return this.prompt(prompts)
+			.then(function(answers) {
+				for(var k in answers) {
+					self[k] = answers[k];
+				}
 
-			this.compiled = isCompiled(answers);
-
-			done();
-		}.bind(this));
+				self.compiled = isCompiled(answers);
+			});
 	},
 
 	writingMainFiles: function () {
