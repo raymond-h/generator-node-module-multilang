@@ -4,6 +4,9 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 var mkdirp = require('mkdirp');
+var depsObject = require('deps-object');
+var sortedObject = require('sorted-object');
+var objectAssign = require('object-assign');
 
 function nodeModuleName(filePath) {
 	var basename = path.basename(filePath);
@@ -169,6 +172,14 @@ var NodeModuleGenerator = yeoman.Base.extend({
 	},
 
 	installDevDeps: function() {
+		function assignToDependencies(pkg, depObjName, deps) {
+			var currentDeps = pkg[depObjName] || {};
+			var newDepsObj = sortedObject(
+				objectAssign(currentDeps, deps)
+			);
+			pkg[depObjName] = newDepsObj;
+		}
+
 		var devDeps = ['mocha', 'chai', 'onchange'];
 
 		switch(this.language) {
@@ -182,6 +193,14 @@ var NodeModuleGenerator = yeoman.Base.extend({
 
 		if(!this.options['skip-install']) {
 			this.npmInstall(devDeps, { saveDev: true });
+		}
+		else {
+			return depsObject(devDeps)
+				.then(function(devDepsObj) {
+					var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+					assignToDependencies(pkg, 'devDependencies', devDepsObj);
+					this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+				}.bind(this));
 		}
 	}
 });

@@ -23,7 +23,10 @@
     "yeoman-generator"
   ],
   "dependencies": {
+    "deps-object": "^2.0.2",
     "mkdirp": "^0.5.1",
+    "object-assign": "^4.1.0",
+    "sorted-object": "^2.0.0",
     "yeoman-generator": "^0.22.5",
     "yosay": "^1.0.5"
   },
