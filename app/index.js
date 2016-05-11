@@ -27,7 +27,6 @@ var NodeModuleGenerator = yeoman.Base.extend({
 	},
 
 	prompting: function () {
-		// var done = this.async();
 		var self = this;
 
 		// have Yeoman greet the user
