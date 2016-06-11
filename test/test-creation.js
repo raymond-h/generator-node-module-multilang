@@ -2,7 +2,7 @@ import test from 'ava';
 import jsv from 'jsverify';
 import helpers from 'yeoman-test';
 import path from 'path';
-import loadJsonFile from 'load-json-file';
+import fs from 'fs';
 
 import { allExist, noneExist } from './_helpers';
 
@@ -110,7 +110,9 @@ test.serial('creates expected files for Babel with Node 4 preset', async t => {
 	await jsv.assert(
 		jsv.forall(promptsArb, async (prompts) => {
 			await runWithPrompts(prompts);
-			const babelrc = await loadJsonFile('.babelrc');
+			const babelrc = JSON.parse(
+				fs.readFileSync('.babelrc', { encoding: 'utf8' })
+			);
 
 			return allExist(expected) &&
 				babelrc.presets.indexOf('es2015-node4') > -1;
