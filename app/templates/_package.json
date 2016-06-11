@@ -24,7 +24,6 @@
 <% } %>
 
 		"pretest": "npm run lint",
-		"prebuild": "npm run test",
 		"watch": "onchange src/ -- npm run build && echo Done",
 		"dev": "npm run watch",
 		"prepublish": "npm run build"
