@@ -180,7 +180,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
 			pkg[depObjName] = newDepsObj;
 		}
 
-		var devDeps = ['mocha', 'chai', 'onchange'];
+		var devDeps = ['ava', 'onchange'];
 
 		switch(this.language) {
 			case 'coffee': devDeps.push('coffee-script', 'coffeelint'); break;
