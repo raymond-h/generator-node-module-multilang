@@ -34,7 +34,8 @@ var NodeModuleGenerator = yeoman.Base.extend({
 
 		function isCompiled(answers) {
 			return answers.language === 'coffee'
-				|| answers.language === 'babel';
+				|| answers.language === 'babel'
+				|| answers.language === 'babel-node4';
 		}
 
 		var prompts = [
@@ -63,6 +64,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
 				choices: [
 					{ name: 'JavaScript', value: 'js' },
 					{ name: 'JavaScript (Babel)', value: 'babel' },
+					{ name: 'JavaScript (Babel, Node 4)', value: 'babel-node4' },
 					{ name: 'CoffeeScript', value: 'coffee' }
 				]
 			},
@@ -71,7 +73,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
 				name: 'experimental',
 				message: 'Enable experimental (stage 0) features?',
 				default: false,
-				when: function(answers) { return answers.language === 'babel'; }
+				when: function(answers) { return answers.language === 'babel' || answers.language === 'babel-node4'; }
 			},
 			{
 				type: 'confirm',
@@ -144,7 +146,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
 				this.copy('index.coffee', 'src/index.coffee');
 				break;
 
-			case 'babel':
+			case 'babel': case 'babel-node4':
 				this.template('_.babelrc', '.babelrc');
 				this.template('_.eslintrc', '.eslintrc');
 				mkdirp.sync('src');
@@ -182,10 +184,16 @@ var NodeModuleGenerator = yeoman.Base.extend({
 
 		switch(this.language) {
 			case 'coffee': devDeps.push('coffee-script', 'coffeelint'); break;
-			case 'babel':
-				devDeps.push('babel-cli', 'babel-register', 'babel-preset-es2015', 'babel-eslint', 'eslint');
+
+			case 'babel': case 'babel-node4':
+				devDeps.push('babel-cli', 'babel-register', 'babel-eslint', 'eslint');
+
+				if(this.language === 'babel-node4') { devDeps.push('babel-preset-es2015-node4'); }
+				else { devDeps.push('babel-preset-es2015'); }
+
 				if(this.experimental) { devDeps.push('babel-preset-stage-0'); }
 				break;
+
 			case 'js': devDeps.push('eslint'); break;
 		}
 

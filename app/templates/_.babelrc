@@ -3,6 +3,10 @@
 <% if(experimental) { %>
         "stage-0",
 <% } %>
+<% if(language === 'babel-node4') { %>
+        "es2015-node4"
+<% } else { %>
         "es2015"
+<% } %>
     ]
 }
