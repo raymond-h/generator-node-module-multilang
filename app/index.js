@@ -108,9 +108,9 @@ var NodeModuleGenerator = yeoman.Base.extend({
 					try {
 						self.user.github.username(function(err, username) {
 							if(err) {
-								return defaultDone('');
+								return defaultDone(null, '');
 							}
-							defaultDone(username);
+							defaultDone(null, username);
 						});
 					}
 					catch(err) {
@@ -118,7 +118,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
 						// being configured on git on Travis
 						// causes an error that is NOT ultimately passed to the callback
 						// of 'self.user.github.username()'
-						defaultDone('');
+						defaultDone(null, '');
 					}
 				},
 				when: function(answers) {
