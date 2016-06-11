@@ -186,7 +186,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
 				devDeps.push('babel-cli', 'babel-register', 'babel-preset-es2015', 'babel-eslint', 'eslint');
 				if(this.experimental) { devDeps.push('babel-preset-stage-0'); }
 				break;
-			case 'js': devDeps.push('jshint'); break;
+			case 'js': devDeps.push('eslint'); break;
 		}
 
 		return depsObject(devDeps)
