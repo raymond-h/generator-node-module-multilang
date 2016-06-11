@@ -2,6 +2,8 @@ language: node_js
 node_js:
   - '0.12'
   - '4'
+  - '5'
+  - '6'
 before_install:
   - currentfolder=${PWD##*/}
   - if [ "$currentfolder" != 'generator-node-module-multilang' ]; then cd .. && eval "mv $currentfolder generator-node-module-multilang" && cd generator-node-module-multilang; fi
