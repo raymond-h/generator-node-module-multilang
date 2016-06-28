@@ -20,12 +20,11 @@
 <% } else { %>
 		"lint": "eslint lib/ test/",
 		"test": "ava test/",
-		"build": "echo nop",
 <% } %>
 
 		"pretest": "npm run lint",
 		"watch": "onchange src/ -- npm run build && echo Done",
 		"dev": "npm run watch",
-		"prepublish": "npm run build"
+		"prepublish": "npm run test<% if(compiled) { %> && npm run build<% } %>"
 	}
 }
