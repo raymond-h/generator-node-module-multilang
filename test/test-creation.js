@@ -3,6 +3,7 @@ import jsv from 'jsverify';
 import helpers from 'yeoman-test';
 import path from 'path';
 import fs from 'fs';
+import loadJsonFile from 'load-json-file';
 
 import { allExist, noneExist } from './_helpers';
 
@@ -42,8 +43,14 @@ test.serial('creates expected files for Coffee', async t => {
 	await jsv.assert(
 		jsv.forall(promptsArb, async (prompts) => {
 			await runWithPrompts(prompts);
+			const pkgJson = await loadJsonFile('package.json');
 
-			return allExist(expected);
+			return allExist(expected) &&
+				/coffeelint/i.test(pkgJson.scripts.lint) &&
+				/ava/i.test(pkgJson.scripts.test) &&
+				/coffee/i.test(pkgJson.scripts.build) &&
+				/build/i.test(pkgJson.scripts.prepublish)
+			;
 		}),
 		{ tests: verifyTestCount }
 	);
@@ -76,8 +83,16 @@ test.serial('creates expected files for Babel', async t => {
 	await jsv.assert(
 		jsv.forall(promptsArb, async (prompts) => {
 			await runWithPrompts(prompts);
+			const babelrc = await loadJsonFile('.babelrc');
+			const pkgJson = await loadJsonFile('package.json');
 
-			return allExist(expected);
+			return allExist(expected) &&
+				babelrc.presets.indexOf('es2015') > -1 &&
+				/eslint/i.test(pkgJson.scripts.lint) &&
+				/ava/i.test(pkgJson.scripts.test) &&
+				/babel/i.test(pkgJson.scripts.build) &&
+				/build/i.test(pkgJson.scripts.prepublish)
+			;
 		}),
 		{ tests: verifyTestCount }
 	);
@@ -110,12 +125,16 @@ test.serial('creates expected files for Babel with Node 4 preset', async t => {
 	await jsv.assert(
 		jsv.forall(promptsArb, async (prompts) => {
 			await runWithPrompts(prompts);
-			const babelrc = JSON.parse(
-				fs.readFileSync('.babelrc', { encoding: 'utf8' })
-			);
+			const babelrc = await loadJsonFile('.babelrc');
+			const pkgJson = await loadJsonFile('package.json');
 
 			return allExist(expected) &&
-				babelrc.presets.indexOf('es2015-node4') > -1;
+				babelrc.presets.indexOf('es2015-node4') > -1 &&
+				/eslint/i.test(pkgJson.scripts.lint) &&
+				/ava/i.test(pkgJson.scripts.test) &&
+				/babel/i.test(pkgJson.scripts.build) &&
+				/build/i.test(pkgJson.scripts.prepublish)
+			;
 		}),
 		{ tests: verifyTestCount }
 	);
@@ -144,8 +163,14 @@ test.serial('creates expected files for vanilla Javascript', async t => {
 	await jsv.assert(
 		jsv.forall(promptsArb, async (prompts) => {
 			await runWithPrompts(prompts);
+			const pkgJson = await loadJsonFile('package.json');
 
-			return allExist(expected) && noneExist(['src']);
+			return allExist(expected) && noneExist(['src']) &&
+				/eslint/i.test(pkgJson.scripts.lint) &&
+				/ava/i.test(pkgJson.scripts.test) &&
+				pkgJson.scripts.build == null &&
+				!/build/i.test(pkgJson.scripts.prepublish)
+			;
 		}),
 		{ tests: verifyTestCount }
 	);
