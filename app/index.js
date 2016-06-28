@@ -148,7 +148,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
 
 			case 'babel': case 'babel-node4':
 				this.template('_.babelrc', '.babelrc');
-				this.template('_.eslintrc', '.eslintrc');
+				this.template('_.eslintrc.json', '.eslintrc.json');
 				mkdirp.sync('src');
 				this.copy('index.js', 'src/index.js');
 				break;
