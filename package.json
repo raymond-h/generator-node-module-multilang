@@ -25,6 +25,7 @@
   "dependencies": {
     "ava": "^0.14.0",
     "deps-object": "^2.0.2",
+    "mit": "^0.1.2",
     "mkdirp": "^0.5.1",
     "object-assign": "^4.1.0",
     "sorted-object": "^2.0.0",

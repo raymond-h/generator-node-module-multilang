@@ -37,7 +37,8 @@ test.serial('creates expected files for Coffee', async t => {
 		'.gitignore',
 		'.npmignore',
 		'package.json',
-		'README.md'
+		'README.md',
+		'LICENSE'
 	];
 
 	await jsv.assert(
@@ -77,7 +78,8 @@ test.serial('creates expected files for Babel', async t => {
 		'.gitignore',
 		'.npmignore',
 		'package.json',
-		'README.md'
+		'README.md',
+		'LICENSE'
 	];
 
 	await jsv.assert(
@@ -119,7 +121,8 @@ test.serial('creates expected files for Babel with Node 4 preset', async t => {
 		'.gitignore',
 		'.npmignore',
 		'package.json',
-		'README.md'
+		'README.md',
+		'LICENSE'
 	];
 
 	await jsv.assert(
@@ -157,7 +160,8 @@ test.serial('creates expected files for vanilla Javascript', async t => {
 		'.gitignore',
 		'.npmignore',
 		'package.json',
-		'README.md'
+		'README.md',
+		'LICENSE'
 	];
 
 	await jsv.assert(

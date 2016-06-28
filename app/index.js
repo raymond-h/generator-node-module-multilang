@@ -7,6 +7,7 @@ var mkdirp = require('mkdirp');
 var depsObject = require('deps-object');
 var sortedObject = require('sorted-object');
 var objectAssign = require('object-assign');
+var mit = require('mit');
 
 function nodeModuleName(filePath) {
 	var basename = path.basename(filePath);
@@ -169,6 +170,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
 		this.template('_.gitignore', '.gitignore');
 		this.template('_.npmignore', '.npmignore');
 		this.template('_README.md', 'README.md');
+		this.fs.write('LICENSE', mit(this.author));
 	},
 
 	writingDevDeps: function() {
