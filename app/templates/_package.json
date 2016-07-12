@@ -1,30 +1,30 @@
 {
-	"name": <%- JSON.stringify(name) %>,
-	"description": <%- JSON.stringify(description) %>,
-	"version": "0.0.0",
-	"license": "MIT",
-	"main": "lib/index.js",
-	"author": <%- JSON.stringify(author) %>,
+    "name": <%- JSON.stringify(name) %>,
+    "description": <%- JSON.stringify(description) %>,
+    "version": "0.0.0",
+    "license": "MIT",
+    "main": "lib/index.js",
+    "author": <%- JSON.stringify(author) %>,
 <% if(addRepo) { %>
-	"repository": <%- JSON.stringify(username + '/' + name) %>,
+    "repository": <%- JSON.stringify(username + '/' + name) %>,
 <% } %>
-	"scripts": {
+    "scripts": {
 <% if(language === 'coffee') { %>
-		"lint": "coffeelint src/ test/",
-		"test": "ava -r coffee-script/register test/",
-		"build": "coffee -c -o lib/ src/",
+        "lint": "coffeelint src/ test/",
+        "test": "ava -r coffee-script/register test/",
+        "build": "coffee -c -o lib/ src/",
 <% } else if(language === 'babel' || language === 'babel-node4') { %>
-		"lint": "eslint src/ test/",
-		"test": "ava -r babel-register test/",
-		"build": "babel -d lib/ src/",
+        "lint": "eslint src/ test/",
+        "test": "ava -r babel-register test/",
+        "build": "babel -d lib/ src/",
 <% } else { %>
-		"lint": "eslint lib/ test/",
-		"test": "ava test/",
+        "lint": "eslint lib/ test/",
+        "test": "ava test/",
 <% } %>
 
-		"pretest": "npm run lint",
-		"watch": "onchange src/ -- npm run build && echo Done",
-		"dev": "npm run watch",
-		"prepublish": "npm run test<% if(compiled) { %> && npm run build<% } %>"
-	}
+        "pretest": "npm run lint",
+        "watch": "onchange src/ -- npm run build && echo Done",
+        "dev": "npm run watch",
+        "prepublish": "npm run test<% if(compiled) { %> && npm run build<% } %>"
+    }
 }
