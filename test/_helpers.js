@@ -11,7 +11,7 @@ exports.allExist = function allExist(paths) {
 }
 
 exports.noneExist = function noneExist(paths) {
-	return _.every(paths, function(path) {
+    return _.every(paths, function(path) {
         return !pathExists.sync(path);
     });
 }
