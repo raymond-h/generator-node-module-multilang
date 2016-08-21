@@ -33,7 +33,7 @@ test.serial('creates expected files for Coffee', async t => {
 
     const expected = [
         'src/index.coffee',
-        'test',
+        'test/test.coffee',
         '.gitignore',
         '.npmignore',
         'package.json',
@@ -73,7 +73,7 @@ test.serial('creates expected files for Babel', async t => {
 
     const expected = [
         'src/index.js',
-        'test',
+        'test/test.js',
         '.babelrc',
         '.gitignore',
         '.npmignore',
@@ -116,7 +116,7 @@ test.serial('creates expected files for Babel with Node 4 preset', async t => {
 
     const expected = [
         'src/index.js',
-        'test',
+        'test/test.js',
         '.babelrc',
         '.gitignore',
         '.npmignore',
@@ -156,7 +156,7 @@ test.serial('creates expected files for vanilla Javascript', async t => {
 
     const expected = [
         'lib/index.js',
-        'test',
+        'test/test.js',
         '.gitignore',
         '.npmignore',
         'package.json',

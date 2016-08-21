@@ -145,6 +145,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
             case 'coffee':
                 mkdirp.sync('src');
                 this.copy('index.coffee', 'src/index.coffee');
+                this.copy('test.coffee', 'test/test.coffee');
                 break;
 
             case 'babel': case 'babel-node4':
@@ -152,11 +153,13 @@ var NodeModuleGenerator = yeoman.Base.extend({
                 this.template('_.eslintrc.json', '.eslintrc.json');
                 mkdirp.sync('src');
                 this.copy('index.js', 'src/index.js');
+                this.copy('test.js', 'test/test.js');
                 break;
 
             case 'js':
                 mkdirp.sync('lib');
                 this.copy('index.js', 'lib/index.js');
+                this.copy('test.js', 'test/test.js');
                 break;
         }
 
