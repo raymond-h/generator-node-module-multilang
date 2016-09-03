@@ -90,6 +90,7 @@ test.serial('creates expected files for Babel', async t => {
 
             return allExist(expected) &&
                 babelrc.presets.indexOf('es2015') > -1 &&
+                babelrc.plugins.indexOf('transform-runtime') > -1 &&
                 /eslint/i.test(pkgJson.scripts.lint) &&
                 /ava/i.test(pkgJson.scripts.test) &&
                 /babel/i.test(pkgJson.scripts.build) &&
@@ -133,6 +134,7 @@ test.serial('creates expected files for Babel with Node 4 preset', async t => {
 
             return allExist(expected) &&
                 babelrc.presets.indexOf('es2015-node4') > -1 &&
+                babelrc.plugins.indexOf('transform-runtime') > -1 &&
                 /eslint/i.test(pkgJson.scripts.lint) &&
                 /ava/i.test(pkgJson.scripts.test) &&
                 /babel/i.test(pkgJson.scripts.build) &&
