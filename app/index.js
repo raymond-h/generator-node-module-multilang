@@ -189,14 +189,14 @@ var NodeModuleGenerator = yeoman.Base.extend({
             case 'coffee': devDeps.push('coffee-script', 'coffeelint'); break;
 
             case 'babel': case 'babel-node4':
-                devDeps.push('babel-cli', 'babel-register', 'babel-eslint', 'eslint');
+                deps.push('babel-runtime');
+                devDeps.push('babel-cli', 'babel-register', 'babel-eslint', 'eslint', 'babel-plugin-transform-runtime');
 
                 if(this.language === 'babel-node4') { devDeps.push('babel-preset-es2015-node4'); }
                 else { devDeps.push('babel-preset-es2015'); }
 
                 if(this.experimental) {
-                    deps.push('babel-runtime');
-                    devDeps.push('babel-preset-stage-0', 'babel-plugin-transform-runtime');
+                    devDeps.push('babel-preset-stage-0');
                 }
                 break;
 

@@ -1,9 +1,7 @@
 {
-<% if(experimental) { %>
     "plugins": [
         "transform-runtime"
     ],
-<% } %>
     "presets": [
 <% if(experimental) { %>
         "stage-0",
