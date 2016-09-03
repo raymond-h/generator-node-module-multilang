@@ -183,6 +183,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
         }
 
         var devDeps = ['ava', 'onchange'];
+        var deps = [];
 
         switch(this.language) {
             case 'coffee': devDeps.push('coffee-script', 'coffeelint'); break;
@@ -193,18 +194,27 @@ var NodeModuleGenerator = yeoman.Base.extend({
                 if(this.language === 'babel-node4') { devDeps.push('babel-preset-es2015-node4'); }
                 else { devDeps.push('babel-preset-es2015'); }
 
-                if(this.experimental) { devDeps.push('babel-preset-stage-0'); }
+                if(this.experimental) {
+                    deps.push('babel-runtime');
+                    devDeps.push('babel-preset-stage-0', 'babel-plugin-transform-runtime');
+                }
                 break;
 
             case 'js': devDeps.push('eslint'); break;
         }
 
-        return depsObject(devDeps)
-            .then(function(devDepsObj) {
-                var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-                assignToDependencies(pkg, 'devDependencies', devDepsObj);
-                this.fs.writeJSON(this.destinationPath('package.json'), pkg);
-            }.bind(this));
+        return Promise.all([
+            depsObject(deps),
+            depsObject(devDeps)
+        ])
+        .then(function(objs) {
+            var depsObj = objs[0];
+            var devDepsObj = objs[1];
+            var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+            assignToDependencies(pkg, 'devDependencies', devDepsObj);
+            assignToDependencies(pkg, 'dependencies', depsObj);
+            this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+        }.bind(this));
     }
 });
 
