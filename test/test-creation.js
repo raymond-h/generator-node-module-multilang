@@ -77,6 +77,7 @@ test.serial('creates expected files for Babel', async t => {
         '.babelrc',
         '.gitignore',
         '.npmignore',
+        '.eslintrc.json',
         'package.json',
         'README.md',
         'LICENSE'
@@ -90,6 +91,7 @@ test.serial('creates expected files for Babel', async t => {
 
             return allExist(expected) &&
                 babelrc.presets.indexOf('es2015') > -1 &&
+                babelrc.plugins.indexOf('transform-runtime') > -1 &&
                 /eslint/i.test(pkgJson.scripts.lint) &&
                 /ava/i.test(pkgJson.scripts.test) &&
                 /babel/i.test(pkgJson.scripts.build) &&
@@ -120,6 +122,7 @@ test.serial('creates expected files for Babel with Node 4 preset', async t => {
         '.babelrc',
         '.gitignore',
         '.npmignore',
+        '.eslintrc.json',
         'package.json',
         'README.md',
         'LICENSE'
@@ -133,6 +136,7 @@ test.serial('creates expected files for Babel with Node 4 preset', async t => {
 
             return allExist(expected) &&
                 babelrc.presets.indexOf('es2015-node4') > -1 &&
+                babelrc.plugins.indexOf('transform-runtime') > -1 &&
                 /eslint/i.test(pkgJson.scripts.lint) &&
                 /ava/i.test(pkgJson.scripts.test) &&
                 /babel/i.test(pkgJson.scripts.build) &&
@@ -159,6 +163,7 @@ test.serial('creates expected files for vanilla Javascript', async t => {
         'test/test.js',
         '.gitignore',
         '.npmignore',
+        '.eslintrc.json',
         'package.json',
         'README.md',
         'LICENSE'
