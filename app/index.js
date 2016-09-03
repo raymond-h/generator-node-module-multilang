@@ -157,6 +157,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
             case 'js':
                 mkdirp.sync('lib');
                 this.copy('index.js', 'lib/index.js');
+                this.template('_.eslintrc.json', '.eslintrc.json');
                 break;
         }
 

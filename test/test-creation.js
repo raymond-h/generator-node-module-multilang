@@ -77,6 +77,7 @@ test.serial('creates expected files for Babel', async t => {
         '.babelrc',
         '.gitignore',
         '.npmignore',
+        '.eslintrc.json',
         'package.json',
         'README.md',
         'LICENSE'
@@ -120,6 +121,7 @@ test.serial('creates expected files for Babel with Node 4 preset', async t => {
         '.babelrc',
         '.gitignore',
         '.npmignore',
+        '.eslintrc.json',
         'package.json',
         'README.md',
         'LICENSE'
@@ -159,6 +161,7 @@ test.serial('creates expected files for vanilla Javascript', async t => {
         'test',
         '.gitignore',
         '.npmignore',
+        '.eslintrc.json',
         'package.json',
         'README.md',
         'LICENSE'
