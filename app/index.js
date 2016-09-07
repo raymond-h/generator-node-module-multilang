@@ -161,6 +161,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
                 this.copy('index.js', 'lib/index.js');
                 this.copy('test.js', 'test/test.js');
                 this.template('_.eslintrc.json', '.eslintrc.json');
+                this.template('_test.eslintrc.json', 'test/.eslintrc.json');
                 break;
         }
 
