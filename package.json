@@ -24,6 +24,8 @@
   ],
   "dependencies": {
     "deps-object": "^2.0.2",
+    "gulp-filter": "^4.0.0",
+    "gulp-json-format": "^1.0.0",
     "mit": "^0.1.2",
     "mkdirp": "^0.5.1",
     "object-assign": "^4.1.0",

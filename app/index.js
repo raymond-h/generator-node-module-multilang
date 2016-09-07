@@ -8,6 +8,8 @@ var depsObject = require('deps-object');
 var sortedObject = require('sorted-object');
 var objectAssign = require('object-assign');
 var mit = require('mit');
+var filter = require('gulp-filter');
+var formatJSON = require('gulp-json-format');
 
 function nodeModuleName(filePath) {
     var basename = path.basename(filePath);
@@ -141,6 +143,11 @@ var NodeModuleGenerator = yeoman.Base.extend({
     },
 
     writingMainFiles: function () {
+        var filterJSON = filter(['.babelrc', '.eslintrc.json'], { restore: true })
+        this.registerTransformStream(filterJSON);
+        this.registerTransformStream(formatJSON(4));
+        this.registerTransformStream(filterJSON.restore);
+
         switch(this.language) {
             case 'coffee':
                 mkdirp.sync('src');
