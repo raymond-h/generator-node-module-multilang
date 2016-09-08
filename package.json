@@ -27,7 +27,6 @@
     "gulp-filter": "^4.0.0",
     "gulp-json-format": "^1.0.0",
     "mit": "^0.1.2",
-    "mkdirp": "^0.5.1",
     "object-assign": "^4.1.0",
     "sorted-object": "^2.0.0",
     "yeoman-generator": "^0.23.3",
