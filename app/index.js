@@ -3,7 +3,6 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
-var mkdirp = require('mkdirp');
 var depsObject = require('deps-object');
 var sortedObject = require('sorted-object');
 var objectAssign = require('object-assign');
@@ -150,7 +149,6 @@ var NodeModuleGenerator = yeoman.Base.extend({
 
         switch(this.language) {
             case 'coffee':
-                mkdirp.sync('src');
                 this.copy('index.coffee', 'src/index.coffee');
                 this.copy('test.coffee', 'test/test.coffee');
                 break;
@@ -158,21 +156,17 @@ var NodeModuleGenerator = yeoman.Base.extend({
             case 'babel': case 'babel-node4':
                 this.template('_.babelrc', '.babelrc');
                 this.template('_.eslintrc.json', '.eslintrc.json');
-                mkdirp.sync('src');
                 this.copy('index.js', 'src/index.js');
                 this.copy('test.js', 'test/test.js');
                 break;
 
             case 'js':
-                mkdirp.sync('lib');
                 this.copy('index.js', 'lib/index.js');
                 this.copy('test.js', 'test/test.js');
                 this.template('_.eslintrc.json', '.eslintrc.json');
                 this.template('_test.eslintrc.json', 'test/.eslintrc.json');
                 break;
         }
-
-        mkdirp.sync('test');
 
         if(this.useTravisCI) {
             this.copy('.travis.yml', '.travis.yml');
