@@ -9,6 +9,7 @@ var objectAssign = require('object-assign');
 var mit = require('mit');
 var filter = require('gulp-filter');
 var formatJSON = require('gulp-json-format');
+var snakeCase = require('lodash.snakecase');
 
 function nodeModuleName(filePath) {
     var basename = path.basename(filePath);
@@ -45,6 +46,9 @@ var NodeModuleGenerator = yeoman.Base.extend({
                 type: 'input',
                 name: 'name',
                 message: 'What is it called?',
+                filter: function(input){
+                    return snakeCase(input);
+                },
                 default: nodeModuleName(process.cwd())
             },
             {
@@ -107,6 +111,19 @@ var NodeModuleGenerator = yeoman.Base.extend({
                 type: 'input',
                 name: 'username',
                 message: 'What is your GitHub username?',
+                store: true,
+                validate: function(input) {
+                    var res =   !input.startsWith('_')   &&
+                                !(input.length > 15)     &&
+                                !(input.length < 2)      &&
+                                (input.match('^[A-z, _]*$'));
+
+                    if (!res) {
+                        this.log('You entered an invalid username!');
+                    }
+
+                    return res;
+                },
                 default: function() {
                     var defaultDone = this.async();
                     try {
