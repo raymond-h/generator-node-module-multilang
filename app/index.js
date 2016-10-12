@@ -113,16 +113,13 @@ var NodeModuleGenerator = yeoman.Base.extend({
                 message: 'What is your GitHub username?',
                 store: true,
                 validate: function(input) {
-                    var res =   !input.startsWith('_')   &&
-                                !(input.length > 15)     &&
-                                !(input.length < 2)      &&
-                                (input.match('^[A-z, _]*$'));
+                    var res = input.match('^(?!_)[A-z, _]{2,15}$');
 
                     if (!res) {
-                        this.log('You entered an invalid username!');
+                        return 'You entered an invalid username!';
                     }
 
-                    return res;
+                    return true;
                 },
                 default: function() {
                     var defaultDone = this.async();
