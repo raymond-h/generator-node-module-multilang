@@ -9,7 +9,7 @@ var objectAssign = require('object-assign');
 var mit = require('mit');
 var filter = require('gulp-filter');
 var formatJSON = require('gulp-json-format');
-var snakeCase = require('lodash.snakecase');
+var kebabCase = require('lodash.kebabcase');
 
 function nodeModuleName(filePath) {
     var basename = path.basename(filePath);
@@ -46,9 +46,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
                 type: 'input',
                 name: 'name',
                 message: 'What is it called?',
-                filter: function(input){
-                    return snakeCase(input);
-                },
+                filter: kebabCase,
                 default: nodeModuleName(process.cwd())
             },
             {
