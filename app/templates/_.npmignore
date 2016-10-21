@@ -1,4 +1,7 @@
 node_modules/
-<% if(compiled && !publishSource) { %>src/<% } %>
+<%_ if(compiled && !publishSource) { _%>
+src/
+test/
+<%_ } _%>
 
 *.log
