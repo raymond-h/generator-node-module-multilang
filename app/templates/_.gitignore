@@ -1,4 +1,6 @@
 node_modules/
-<% if(compiled && !checkinCompiled) { %>lib/<% } %>
+<%_ if(compiled && !checkinCompiled) { _%>
+lib/
+<%_ } _%>
 
 *.log
