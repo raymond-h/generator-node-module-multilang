@@ -31,8 +31,11 @@
 
         "pretest": "npm run lint",
         "test": "ava",
+<% if(compiled) { %>
         "watch": "onchange src/ -- npm run build && echo Done",
         "dev": "npm run watch",
+<% } %>
+
         "prepublish": "npm run test<% if(compiled) { %> && npm run build<% } %>"
     }
 }
