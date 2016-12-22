@@ -50,7 +50,9 @@ test.serial('creates expected files for Coffee', async t => {
                 /coffeelint/i.test(pkgJson.scripts.lint) &&
                 /ava/i.test(pkgJson.scripts.test) &&
                 /coffee/i.test(pkgJson.scripts.build) &&
-                /build/i.test(pkgJson.scripts.prepublish)
+                /build/i.test(pkgJson.scripts.prepublish) &&
+                /onchange/i.test(pkgJson.scripts.watch) &&
+                /watch/i.test(pkgJson.scripts.dev)
             ;
         }),
         { tests: verifyTestCount }
@@ -95,7 +97,9 @@ test.serial('creates expected files for Babel', async t => {
                 /eslint/i.test(pkgJson.scripts.lint) &&
                 /ava/i.test(pkgJson.scripts.test) &&
                 /babel/i.test(pkgJson.scripts.build) &&
-                /build/i.test(pkgJson.scripts.prepublish)
+                /build/i.test(pkgJson.scripts.prepublish) &&
+                /onchange/i.test(pkgJson.scripts.watch) &&
+                /watch/i.test(pkgJson.scripts.dev)
             ;
         }),
         { tests: verifyTestCount }
@@ -140,7 +144,9 @@ test.serial('creates expected files for Babel with Node 4 preset', async t => {
                 /eslint/i.test(pkgJson.scripts.lint) &&
                 /ava/i.test(pkgJson.scripts.test) &&
                 /babel/i.test(pkgJson.scripts.build) &&
-                /build/i.test(pkgJson.scripts.prepublish)
+                /build/i.test(pkgJson.scripts.prepublish) &&
+                /onchange/i.test(pkgJson.scripts.watch) &&
+                /watch/i.test(pkgJson.scripts.dev)
             ;
         }),
         { tests: verifyTestCount }
@@ -177,8 +183,10 @@ test.serial('creates expected files for vanilla Javascript', async t => {
             return allExist(expected) && noneExist(['src']) &&
                 /eslint/i.test(pkgJson.scripts.lint) &&
                 /ava/i.test(pkgJson.scripts.test) &&
+                !/build/i.test(pkgJson.scripts.prepublish) &&
                 pkgJson.scripts.build == null &&
-                !/build/i.test(pkgJson.scripts.prepublish)
+                pkgJson.scripts.watch == null &&
+                pkgJson.scripts.dev == null
             ;
         }),
         { tests: verifyTestCount }
