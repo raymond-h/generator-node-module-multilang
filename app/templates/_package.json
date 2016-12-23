@@ -8,21 +8,14 @@
 <% if(addRepo) { %>
     "repository": <%- JSON.stringify(username + '/' + name) %>,
 <% } %>
-<% if(language === 'coffee') { %>
-    "ava": {
-        "require": ["coffee-script/register"]
-    },
-<% } else if(language === 'babel' || language === 'babel-node4') { %>
+<% if(compiled) { %>
     "ava": {
         "require": ["babel-register"],
         "babel": "inherit"
     },
 <% } %>
    "scripts": {
-<% if(language === 'coffee') { %>
-        "lint": "coffeelint src/ test/",
-        "build": "coffee -c -o lib/ src/",
-<% } else if(language === 'babel' || language === 'babel-node4') { %>
+<% if(compiled) { %>
         "lint": "eslint src/ test/",
         "build": "babel -d lib/ src/",
 <% } else { %>

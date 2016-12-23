@@ -36,8 +36,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
         this.log(yosay('Coming up - a new node.js module!'));
 
         function isCompiled(answers) {
-            return answers.language === 'coffee'
-                || answers.language === 'babel'
+            return answers.language === 'babel'
                 || answers.language === 'babel-node4';
         }
 
@@ -69,7 +68,6 @@ var NodeModuleGenerator = yeoman.Base.extend({
                     { name: 'JavaScript', value: 'js' },
                     { name: 'JavaScript (Babel)', value: 'babel' },
                     { name: 'JavaScript (Babel, Node 4)', value: 'babel-node4' },
-                    { name: 'CoffeeScript', value: 'coffee' }
                 ]
             },
             {
@@ -77,7 +75,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
                 name: 'experimental',
                 message: 'Enable experimental (stage 0) features?',
                 default: false,
-                when: function(answers) { return answers.language === 'babel' || answers.language === 'babel-node4'; }
+                when: isCompiled
             },
             {
                 type: 'confirm',
@@ -160,11 +158,6 @@ var NodeModuleGenerator = yeoman.Base.extend({
         this.registerTransformStream(filterJSON.restore);
 
         switch(this.language) {
-            case 'coffee':
-                this.copy('index.coffee', 'src/index.coffee');
-                this.copy('test.coffee', 'test/test.coffee');
-                break;
-
             case 'babel': case 'babel-node4':
                 this.template('_.babelrc', '.babelrc');
                 this.template('_.eslintrc.json', '.eslintrc.json');
@@ -204,8 +197,6 @@ var NodeModuleGenerator = yeoman.Base.extend({
         var deps = [];
 
         switch(this.language) {
-            case 'coffee': devDeps.push('coffee-script', 'coffeelint'); break;
-
             case 'babel': case 'babel-node4':
                 deps.push('babel-runtime');
                 devDeps.push('babel-cli', 'babel-register', 'babel-eslint', 'eslint', 'babel-plugin-transform-runtime');
