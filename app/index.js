@@ -67,7 +67,7 @@ var NodeModuleGenerator = yeoman.Base.extend({
                 choices: [
                     { name: 'JavaScript', value: 'js' },
                     { name: 'JavaScript (Babel)', value: 'babel' },
-                    { name: 'JavaScript (Babel, Node 4)', value: 'babel-node4' },
+                    { name: 'JavaScript (Babel, Node 4)', value: 'babel-node4' }
                 ]
             },
             {
